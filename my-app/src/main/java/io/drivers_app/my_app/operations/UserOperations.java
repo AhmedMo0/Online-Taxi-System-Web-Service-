@@ -2,6 +2,7 @@ package io.drivers_app.my_app.operations;
 
 import java.util.Scanner;
 
+import io.drivers_app.my_app.domain.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,10 @@ public class UserOperations {
 		trip.driver.currTrip = trip;
 		Data.getInstance().dataOperation.deleteTrip(user.currTrip);
 		user.currTrip = trip;
+		Event event= new Event("User accepts captain price" , user.getUsername() );
+		Data.getInstance().dataOperation.addEvent(event);
+		Event event2= new Event("Captain arrived to user location" , trip.driver.getUsername() ,user.getUsername());
+		Data.getInstance().dataOperation.addEvent(event2);
 		
 		user.offersList.clear();
 	}
@@ -110,6 +115,8 @@ public class UserOperations {
 			
 			user.currTrip.driver.currTrip = null;
 			user.currTrip = null;
+			Event event= new Event("Captain arrived user to destination" , user.currTrip.driver.getUsername() , user.getUsername());
+			Data.getInstance().dataOperation.addEvent(event);
 		}
 		else
 		{

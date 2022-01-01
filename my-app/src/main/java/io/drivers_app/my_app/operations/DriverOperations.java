@@ -2,9 +2,7 @@ package io.drivers_app.my_app.operations;
 
 import java.util.Scanner;
 
-import io.drivers_app.my_app.domain.Driver;
-import io.drivers_app.my_app.domain.NormalUser;
-import io.drivers_app.my_app.domain.Trip;
+import io.drivers_app.my_app.domain.*;
 
 public class DriverOperations {
 
@@ -66,7 +64,7 @@ public class DriverOperations {
         Trip tmp = new Trip(t);
         Scanner scan = new Scanner(System.in);
         
-        System.out.println("Entre your offer price");
+        System.out.println("Enter your offer price");
         double price = scan.nextDouble();
         
         tmp.setPrice(price);
@@ -79,6 +77,9 @@ public class DriverOperations {
         {
         	user.userOperation.addToOfferList(tmp);
         }
+        Event event= new Event("Captain put a price to ride" , driver.getUsername() , price);
+        Data.getInstance().dataOperation.addEvent(event);
+
         	
     }
 

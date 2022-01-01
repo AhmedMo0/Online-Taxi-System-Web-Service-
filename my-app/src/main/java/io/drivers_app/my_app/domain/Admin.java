@@ -99,5 +99,13 @@ public class Admin extends Person {
     		System.out.println("Suspended List is Empty");
     	}
     }
+     public void showEvents()
+     {
+         Data database = Data.getInstance();
+         for (Event event: database.eventList)
+         {
+             event.printEvent();
+         }
+     }
 
 }

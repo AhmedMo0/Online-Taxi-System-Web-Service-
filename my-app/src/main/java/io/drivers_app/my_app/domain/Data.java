@@ -12,6 +12,7 @@ public class Data {
    
     public static ArrayList<Trip> tripList;
     public static ArrayList<Driver> driverList;
+    public static ArrayList<Event> eventList;
     
     public static Data instance = null;
     public Person currUser = null;
@@ -25,6 +26,7 @@ public class Data {
     	suspended = new ArrayList<>();
     	tripList = new ArrayList<>();
 		driverList = new ArrayList<>();
+        eventList = new ArrayList<>();
     	
     	Admin defaultAdmin = new Admin("admin", "admin", "011000000");
     	currUser = defaultAdmin;

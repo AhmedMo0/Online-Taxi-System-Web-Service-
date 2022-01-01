@@ -2,12 +2,7 @@ package io.drivers_app.my_app.operations;
 
 import java.util.ArrayList;
 
-import io.drivers_app.my_app.domain.Admin;
-import io.drivers_app.my_app.domain.Data;
-import io.drivers_app.my_app.domain.Driver;
-import io.drivers_app.my_app.domain.NormalUser;
-import io.drivers_app.my_app.domain.Person;
-import io.drivers_app.my_app.domain.Trip;
+import io.drivers_app.my_app.domain.*;
 
 public class DataOperations {
 	
@@ -165,5 +160,12 @@ public class DataOperations {
 			d.driverOperations.addToAvailableTrips(t);
 		}
 	}
-	
+
+	public void addEvent(Event event)
+	{
+		if(data.eventList.indexOf(event) == -1)
+		{
+			data.eventList.add(event);
+		}
+	}
 }
