@@ -11,6 +11,7 @@ public class Trip {
 	public ArrayList<NormalUser> users;
 	public Driver driver;
 	public boolean status;
+	public int passengers;
 	
 	public Trip() {}
 	
@@ -20,6 +21,7 @@ public class Trip {
 		destination = dest;
 		rate = 0;
 		price = 0;
+		passengers = 0;
 		driver = null;
 		users = new ArrayList<>();
 		status = false;

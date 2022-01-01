@@ -19,7 +19,7 @@ public class Admin extends Person {
     public void verify(int indx)
     {
     		Driver driver = Data.pendingDrivers.get(indx);
-    		Data.getInstance().addDriver(driver);
+    		Data.getInstance().dataOperation.addDriver(driver);
     	
             Data.pendingDrivers.remove(indx);
             Data.userList.add(driver);

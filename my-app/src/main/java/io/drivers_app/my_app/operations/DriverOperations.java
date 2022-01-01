@@ -29,7 +29,7 @@ public class DriverOperations {
     
     public void addToAvailableTrips(Trip t)
     {
-    	if(driver.favArea.indexOf(t.source) != -1)
+    	if(driver.favArea.indexOf(t.source) != -1 && driver.currTrip != null)
     	{
     		driver.availableTrips.add(t);
     	}

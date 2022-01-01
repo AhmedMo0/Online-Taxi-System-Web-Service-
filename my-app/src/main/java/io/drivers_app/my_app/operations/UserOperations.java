@@ -66,17 +66,18 @@ public class UserOperations {
 	public void acceptOffer(Trip trip)
 	{
 		trip.driver.currTrip = trip;
-		Data.getInstance().deleteTrip(user.currTrip);
+		Data.getInstance().dataOperation.deleteTrip(user.currTrip);
 		user.currTrip = trip;
 		
 		user.offersList.clear();
 	}
 	
-	public void requestTrip(String src, String dest)
+	public void requestTrip(String src, String dest, int otherPassengers)
 	{
 		user.currTrip = new Trip(src, dest);
+		user.currTrip.passengers = 1 + otherPassengers;
 		user.currTrip.setUser(user);
-		Data.getInstance().addTrip(user.currTrip);
+		Data.getInstance().dataOperation.addTrip(user.currTrip);
 	}
 	
 	public void finishTrip()
