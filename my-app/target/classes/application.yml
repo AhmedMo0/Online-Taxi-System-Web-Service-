@@ -24,3 +24,6 @@ spring:
       path: /h2-console
 springdoc:
   pathsToMatch: /api/**
+server:
+  error:
+    include-message: always

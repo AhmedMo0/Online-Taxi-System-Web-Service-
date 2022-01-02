@@ -1,17 +1,42 @@
 package io.drivers_app.my_app.domain;
 
+import java.time.*;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.drivers_app.my_app.domain.discount.DiscountBuilder;
 
 public class Trip {
 
 	public String source;
 	public String destination;
+	
+	@JsonIgnore
 	public int rate;
+	
+	@JsonIgnore
 	public double price; // change in Class D
+	
+	@JsonIgnore
+	public double totalDiscount = 0;
+	
+	@JsonIgnore
 	public ArrayList<NormalUser> users;
+	
+	@JsonIgnore
 	public Driver driver;
+	
+	@JsonIgnore
 	public boolean status;
+	
+	@JsonIgnore
 	public int passengers;
+	public LocalDateTime dateTime;
+	
+	@JsonIgnore
+	private DiscountBuilder discountBuilder;
+	
 	
 	public Trip() {}
 	
@@ -25,6 +50,9 @@ public class Trip {
 		driver = null;
 		users = new ArrayList<>();
 		status = false;
+		dateTime = LocalDateTime.now();
+		discountBuilder = new DiscountBuilder(this);
+		
 	}
 	
 	public Trip(Trip that) {
@@ -76,6 +104,13 @@ public class Trip {
 		this.driver = driver;
 	}
 
+	
+	public void checkDiscount()
+	{
+		discountBuilder.applyDiscountPhases();
+		price = totalDiscount == 0? price: price*totalDiscount;
+	}
+	
 	@Override
 	public String toString() {
 		return "Trip [source=" + source + ", destination=" + destination + ", rate=" + rate + ", price=" + price

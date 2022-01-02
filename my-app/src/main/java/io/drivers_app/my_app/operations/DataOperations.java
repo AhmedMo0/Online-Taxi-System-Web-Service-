@@ -2,9 +2,13 @@ package io.drivers_app.my_app.operations;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import io.drivers_app.my_app.domain.Admin;
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
+import io.drivers_app.my_app.domain.Event;
 import io.drivers_app.my_app.domain.NormalUser;
 import io.drivers_app.my_app.domain.Person;
 import io.drivers_app.my_app.domain.Trip;
@@ -47,7 +51,7 @@ public class DataOperations {
     	
     	for(Person user: data.userList)
     	{
-    		if(user.getUsername().equals(p.getUsername() ) )
+    		if(user.getUsername().equals(p.getUsername() ) || p.getUsername().equals("admin"))
     		{
     			System.out.println("This username is taken choose another one!");
     			return -1L;
@@ -108,7 +112,14 @@ public class DataOperations {
     		if(user.getUsername().equals(username) )
     		{
     			tmp = user;
+    			
+    			return tmp;
     		}
+    	}
+    	
+    	if(tmp == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found");
     	}
     	
     	return tmp;
@@ -164,6 +175,34 @@ public class DataOperations {
 		{
 			d.driverOperations.addToAvailableTrips(t);
 		}
+	}
+	
+	public boolean areaHasDiscount(String areaName)
+	{
+		boolean f = false;
+		for(String s: data.destAreaWithDiscount)
+		{
+			if(s.equals(areaName))
+			{
+				f = true;
+				break;
+			}
+		}
+		
+		return f;
+	}
+	
+	public void addEvent(Event event)
+	{
+		if(data.eventList.indexOf(event) == -1)
+		{
+			data.eventList.add(event);
+		}
+	}
+	
+	public ArrayList<Event> getEventList()
+	{
+		return data.eventList;
 	}
 	
 }

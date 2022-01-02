@@ -1,11 +1,21 @@
 package io.drivers_app.my_app.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public abstract class Person {
 
     private String userName;
     private String password;
     private String mobileNumber;
     private String email;
+    private String strBirthDate;
+    
+    @JsonIgnore
+    private LocalDateTime birthDate;
 
     public Person() {}
     
@@ -14,9 +24,31 @@ public abstract class Person {
     	this.userName = userName;
     	this.password = password;
     	this.mobileNumber = mobileNumber;
+    	
     }
     
-    public String getUsername() {
+    
+
+	public void setStrBirthDate(String strBirthDate) {
+		this.strBirthDate = strBirthDate;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+		LocalDateTime dt = LocalDate.parse(strBirthDate, formatter).atStartOfDay();
+		
+		birthDate = dt;
+	}
+
+	public String getStrBirthDate() {
+		return strBirthDate;
+	}
+	
+	public LocalDateTime getBirthDate() {
+		return birthDate;
+	}
+
+
+
+	public String getUsername() {
         return userName;
     }
 
