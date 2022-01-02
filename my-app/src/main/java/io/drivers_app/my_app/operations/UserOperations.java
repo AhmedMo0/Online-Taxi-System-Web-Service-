@@ -3,8 +3,10 @@ package io.drivers_app.my_app.operations;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Event;
@@ -89,21 +91,7 @@ public class UserOperations {
 	public void finishTrip()
 	{
 		if(user.currTrip.driver != null)
-		{
-			int rate = 0;
-			/*
-			Scanner scan = new Scanner(System.in);
-			while(true)
-			{
-				System.out.println("rate driver from (1-5)");
-				rate = scan.nextInt();
-				
-				if(rate>=1 && rate <=5)
-				{
-					break;
-				}
-			}*/
-			
+		{			
 			
 			user.currTrip.setStatus(true);
 			
@@ -111,20 +99,22 @@ public class UserOperations {
 			
 			user.currTrip.driver.driverOperations.addToHistory(new Trip(user.currTrip));
 			
-			user.currTrip.checkDiscount();
-			addToHistory(user.currTrip);
-			
-			//System.out.println(user.currTrip.toString());
-			
 			Event event= new Event("Captain arrived user to destination" , user.currTrip.driver.getUsername() , user.getUsername());
 			Data.getInstance().dataOperation.addEvent(event);
 			
 			user.currTrip.driver.currTrip = null;
+			
+			user.currTrip.checkDiscount();
+			addToHistory(user.currTrip);
+			
+			
+			
 			user.currTrip = null;
 		}
 		else
 		{
 			System.out.println("this ride didn't assign to any driver yet");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "this trip has no driver yet");
 		}
 		
 	}
