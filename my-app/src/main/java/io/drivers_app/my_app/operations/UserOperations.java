@@ -103,10 +103,12 @@ public class UserOperations {
 			
 			user.currTrip.driver.driverOperations.updateAvgRate();
 			
-			addToHistory(user.currTrip);
 			user.currTrip.driver.driverOperations.addToHistory(new Trip(user.currTrip));
 			
-			System.out.println(user.currTrip.toString());
+			user.currTrip.checkDiscount();
+			addToHistory(user.currTrip);
+			
+			//System.out.println(user.currTrip.toString());
 			
 			user.currTrip.driver.currTrip = null;
 			user.currTrip = null;

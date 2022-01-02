@@ -166,4 +166,19 @@ public class DataOperations {
 		}
 	}
 	
+	public boolean areaHasDiscount(String areaName)
+	{
+		boolean f = false;
+		for(String s: data.destAreaWithDiscount)
+		{
+			if(s.equals(areaName))
+			{
+				f = true;
+				break;
+			}
+		}
+		
+		return f;
+	}
+	
 }

@@ -79,6 +79,11 @@ public class Admin extends Person {
 		}
     }
     
+    public void addDiscountToDestArea(String areaName)
+    {
+    	Data.getInstance().destAreaWithDiscount.add(areaName.toLowerCase() );
+    }
+    
     public void showSuspendedUsers()
     {
     	Data database = Data.getInstance();

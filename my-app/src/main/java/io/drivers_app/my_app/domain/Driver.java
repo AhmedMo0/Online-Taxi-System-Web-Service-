@@ -3,17 +3,28 @@ package io.drivers_app.my_app.domain;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.drivers_app.my_app.operations.DriverOperations;
 
 public class Driver extends Person {
 
     private String nationalID;
     public ArrayList<String> favArea;
+    
+    @JsonIgnore
     public ArrayList<Trip> availableTrips;
+    
+    @JsonIgnore
     public double avgRate;
+    
+    @JsonIgnore
     public ArrayList<Trip> historyList;
+    
+    @JsonIgnore
     public Trip currTrip = null;
     
+    @JsonIgnore
     public DriverOperations driverOperations = new DriverOperations(this);
     
     public Driver() {}
