@@ -104,7 +104,7 @@ public class UserOperations {
 				}
 			}*/
 			
-			user.currTrip.setRate(rate);
+			
 			user.currTrip.setStatus(true);
 			
 			user.currTrip.driver.driverOperations.updateAvgRate();

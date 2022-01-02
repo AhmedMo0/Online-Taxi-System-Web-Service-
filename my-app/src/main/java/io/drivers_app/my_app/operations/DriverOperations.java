@@ -1,6 +1,5 @@
 package io.drivers_app.my_app.operations;
 
-import java.util.Scanner;
 
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
@@ -64,12 +63,12 @@ public class DriverOperations {
     }
     
     
-    public void sendOffer(Trip t){
+    public void sendOffer(Trip t, double p){
         Trip tmp = new Trip(t);
-        Scanner scan = new Scanner(System.in);
+        
         
         System.out.println("Entre your offer price");
-        double price = scan.nextDouble();
+        double price = p;
         
         tmp.setPrice(price);
         tmp.setDriver(driver);

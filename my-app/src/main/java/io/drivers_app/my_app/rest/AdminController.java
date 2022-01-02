@@ -20,9 +20,7 @@ import io.drivers_app.my_app.domain.Admin;
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
 import io.drivers_app.my_app.domain.Event;
-import io.drivers_app.my_app.domain.NormalUser;
 import io.drivers_app.my_app.domain.Person;
-import io.drivers_app.my_app.domain.loginDTO;
 
 @RestController
 @RequestMapping(value = "/api/admin", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,13 +28,6 @@ public class AdminController {
 
     private Admin curr = null;
 
-    // return all Normal users 
-	/*
-    @GetMapping("/getPendingDrivers")
-    public ResponseEntity<List<Driver> > getAllUsers() {
-        return ResponseEntity.ok(Data.getInstance().dataOperation.getUsers());
-    }
-    */
 
     
     @GetMapping("/{username}")
@@ -53,7 +44,6 @@ public class AdminController {
     
     @GetMapping("/{username}/myData")
     public ResponseEntity<Admin> getAdminData(@PathVariable final String username) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -62,17 +52,10 @@ public class AdminController {
     	return new ResponseEntity<>(curr, HttpStatus.CREATED);
     }
     
-    @GetMapping("/{username}/logout")
-    public ResponseEntity<Admin> logout(@PathVariable final String username) {
-    	curr = null;
-    	
-        return ResponseEntity.ok(curr);
-    }
     
 
     @GetMapping("/{username}/showPendingList")
     public ResponseEntity<List<Driver>> showPendingList(@PathVariable final String username) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -81,10 +64,9 @@ public class AdminController {
     	return new ResponseEntity<>(Data.getInstance().pendingDrivers, HttpStatus.OK);
     }
     
-    @PostMapping("/{username}/verifyDriver/{num}")
+    @PostMapping("/{username}/verifyDriver/indexNum/{num}")
     public ResponseEntity<String> verifyDriver(@PathVariable final String username,
     										@PathVariable final int num) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -96,7 +78,6 @@ public class AdminController {
     
     @GetMapping("/{username}/showSuspendedList")
     public ResponseEntity<List<Person> > showSuspendedList(@PathVariable final String username) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -108,7 +89,6 @@ public class AdminController {
     @PostMapping("/{username}/suspendUser/{suspendedUsername}")
     public ResponseEntity<String> suspendUser(@PathVariable final String username,
     										@PathVariable final String suspendedUsername) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -123,7 +103,6 @@ public class AdminController {
     
     @GetMapping("/{username}/showAreasWithDiscount")
     public ResponseEntity<List<String> > showAreasWithDiscount(@PathVariable final String username) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -135,19 +114,18 @@ public class AdminController {
     @PostMapping("/{username}/addAreasWithDiscount")
     public ResponseEntity<?> addAreasWithDiscount(@PathVariable final String username,
     								@RequestBody @Valid final ArrayList<String> areasList) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
     	}
     	
-    	return new ResponseEntity<>(Data.getInstance().destAreaWithDiscount = areasList, HttpStatus.CREATED);
+    	ArrayList<String> tmp = new ArrayList<>(areasList);
+    	return new ResponseEntity<>(Data.getInstance().destAreaWithDiscount = tmp, HttpStatus.CREATED);
     }
     
     
     @GetMapping("/{username}/showAllEvents")
     public ResponseEntity<List<Event> > showAllEvents(@PathVariable final String username) {    	
-        //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
@@ -156,23 +134,14 @@ public class AdminController {
     	return new ResponseEntity<>(Data.getInstance().eventList, HttpStatus.OK);
     }
     
+    @GetMapping("/{username}/logout")
+    public ResponseEntity<?> logout(@PathVariable final String username) {
+    	curr = null;
+    	
+        return ResponseEntity.ok("Admin logged out");
+    }
     
     
-
-    /*
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable final Long id,
-            @RequestBody @Valid final UserDTO userDTO) {
-        userService.update(id, userDTO);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable final Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-	*/
 
 }
 
