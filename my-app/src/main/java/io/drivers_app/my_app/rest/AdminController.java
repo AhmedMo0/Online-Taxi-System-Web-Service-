@@ -80,8 +80,21 @@ public class AdminController {
     	return new ResponseEntity<>(Data.getInstance().pendingDrivers, HttpStatus.OK);
     }
     
-    @GetMapping("/{username}/suspendedUsersList")
-    public ResponseEntity<List<Person> > suspendedUsersList(@PathVariable final String username) {    	
+    @PostMapping("/{username}/verifyDriver/{num}")
+    public ResponseEntity<String> verifyDriver(@PathVariable final String username,
+    										@PathVariable final int num) {    	
+        //return ResponseEntity.ok(curr);
+    	if(curr == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
+    	}
+    	
+    	curr.verify(num);
+    	return new ResponseEntity<>("Driver Verified", HttpStatus.OK);
+    }
+    
+    @GetMapping("/{username}/showSuspendedList")
+    public ResponseEntity<List<Person> > showSuspendedList(@PathVariable final String username) {    	
         //return ResponseEntity.ok(curr);
     	if(curr == null)
     	{
@@ -89,6 +102,33 @@ public class AdminController {
     	}
     	
     	return new ResponseEntity<>(Data.getInstance().suspended, HttpStatus.OK);
+    }
+    
+    @PostMapping("/{username}/suspendUser/{suspendedUsername}")
+    public ResponseEntity<String> suspendUser(@PathVariable final String username,
+    										@PathVariable final String suspendedUsername) {    	
+        //return ResponseEntity.ok(curr);
+    	if(curr == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
+    	}
+    	
+    	Person tmp = Data.getInstance().dataOperation.getUserByName(suspendedUsername);
+    	curr.suspend(tmp);
+    	
+    	return new ResponseEntity<>("Driver Verified", HttpStatus.OK);
+    }
+    
+    
+    @GetMapping("/{username}/showAreasWithDiscount")
+    public ResponseEntity<List<String> > showAreasWithDiscount(@PathVariable final String username) {    	
+        //return ResponseEntity.ok(curr);
+    	if(curr == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
+    	}
+    	
+    	return new ResponseEntity<>(Data.getInstance().destAreaWithDiscount, HttpStatus.OK);
     }
     
     @PostMapping("/{username}/addAreasWithDiscount")

@@ -2,6 +2,9 @@ package io.drivers_app.my_app.operations;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import io.drivers_app.my_app.domain.Admin;
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
@@ -108,7 +111,14 @@ public class DataOperations {
     		if(user.getUsername().equals(username) )
     		{
     			tmp = user;
+    			
+    			return tmp;
     		}
+    	}
+    	
+    	if(tmp == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found");
     	}
     	
     	return tmp;

@@ -1,6 +1,8 @@
 package io.drivers_app.my_app.domain;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class Admin extends Person {
@@ -19,11 +21,17 @@ public class Admin extends Person {
 
     public void verify(int indx)
     {
-    		Driver driver = Data.pendingDrivers.get(indx);
-    		Data.getInstance().dataOperation.addDriver(driver);
-    	
-            Data.pendingDrivers.remove(indx);
-            Data.userList.add(driver);
+    		try {
+    			Driver driver = Data.pendingDrivers.get(indx);
+				
+    			Data.getInstance().dataOperation.addDriver(driver);
+    			
+    			Data.pendingDrivers.remove(indx);
+    			Data.userList.add(driver);
+			} catch (Exception e) {
+				// TODO: handle exception
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "faild to verify Driver in index " + indx);
+			}
     }
 
     public void suspend(Person p)
