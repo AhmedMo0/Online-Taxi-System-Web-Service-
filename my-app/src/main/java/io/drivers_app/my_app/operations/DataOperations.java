@@ -47,7 +47,7 @@ public class DataOperations {
     	
     	for(Person user: data.userList)
     	{
-    		if(user.getUsername().equals(p.getUsername() ) )
+    		if(user.getUsername().equals(p.getUsername() ) || p.getUsername().equals("admin"))
     		{
     			System.out.println("This username is taken choose another one!");
     			return -1L;

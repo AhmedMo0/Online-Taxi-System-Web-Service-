@@ -1,66 +1,62 @@
 package io.drivers_app.my_app.rest;
 
-
-import java.util.List;
-import javax.validation.Valid;
-
-import org.apache.tomcat.jni.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import io.drivers_app.my_app.domain.Data;
-import io.drivers_app.my_app.domain.Driver;
 import io.drivers_app.my_app.domain.NormalUser;
 
 
 @RestController
-@RequestMapping(value = "/api/register", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
+	 private NormalUser curr = null;
 
-    //private final UserService userService;
+	    // return all Normal users 
+		/*
+	    @GetMapping("/getPendingDrivers")
+	    public ResponseEntity<List<Driver> > getAllUsers() {
+	        return ResponseEntity.ok(Data.getInstance().dataOperation.getUsers());
+	    }
+	    */
+	 
+	 @GetMapping("/{username}")
+	    public ResponseEntity<String> getUser(@PathVariable final String username) {
+	    	curr = (NormalUser)Data.getInstance().dataOperation.getCurrentUser();
+	    	
+	    	if(curr == null)
+	    	{
+	    		throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Access Denied or Already Logged Out");
+	    	}
+	    	
+	        return ResponseEntity.ok("Hi " + username + "you'r logged in");
+	    }
 
-    // return all Normal users 
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<NormalUser> > getAllUsers() {
-        return ResponseEntity.ok(Data.getInstance().dataOperation.getUsers());
-    }
+	    @GetMapping("/{username}/myData")
+	    public ResponseEntity<NormalUser> getAdminData(@PathVariable final String username) {    	
+	        //return ResponseEntity.ok(curr);
+	    	if(curr == null)
+	    	{
+	    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
+	    	}
+	    	
+	    	return new ResponseEntity<>(curr, HttpStatus.CREATED);
+	    }
+	    
+	    @GetMapping("/{username}/logout")
+	    public ResponseEntity<NormalUser> logout(@PathVariable final String username) {
+	    	curr = null;
+	    	
+	        return ResponseEntity.ok(curr);
+	    }
+	    
 
-
-    //create new user
-    @PostMapping("/newUser")
-    public ResponseEntity<Long> createUser(@RequestBody @Valid final NormalUser user) {
-    	
-        return new ResponseEntity<>(Data.getInstance().dataOperation.addUser(user), HttpStatus.CREATED);
-    }
-    
-    @PostMapping("/newDriver")
-    public ResponseEntity<Long> createDriver(@RequestBody @Valid final Driver driver) {
-    	
-        return new ResponseEntity<>(Data.getInstance().dataOperation.addUser(driver), HttpStatus.CREATED);
-    }
-
-    /*
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable final Long id,
-            @RequestBody @Valid final UserDTO userDTO) {
-        userService.update(id, userDTO);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable final Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-	*/
+	   
 
 }

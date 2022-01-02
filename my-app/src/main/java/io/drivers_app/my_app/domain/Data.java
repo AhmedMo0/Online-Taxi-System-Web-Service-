@@ -29,7 +29,7 @@ public class Data {
 		driverList = new ArrayList<>();
 		destAreaWithDiscount = new ArrayList<>();
 		
-    	Admin defaultAdmin = new Admin("admin", "admin", "011000000");
+    	Admin defaultAdmin = new Admin("admin", "admin", "admin@admin", "011000000");
     	currUser = defaultAdmin;
     	dataOperation.addUser(defaultAdmin);
 

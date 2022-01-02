@@ -7,9 +7,10 @@ public class Admin extends Person {
 
 	public Admin() {}
 	
-	public Admin(String userName, String pass, String mobile)
+	public Admin(String userName, String pass, String email, String mobile)
 	{
 		super(userName, pass, mobile);
+		setEmail(email);
 	}
 	
     public void addAdmin(Admin admin) {
@@ -104,5 +105,12 @@ public class Admin extends Person {
     		System.out.println("Suspended List is Empty");
     	}
     }
+
+	@Override
+	public String toString() {
+		return "Admin [getUsername()=" + getUsername() + ", getEmail()=" + getEmail() + "]";
+	}
+    
+    
 
 }
