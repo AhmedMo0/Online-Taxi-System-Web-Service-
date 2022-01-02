@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import io.drivers_app.my_app.domain.Admin;
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
+import io.drivers_app.my_app.domain.Event;
 import io.drivers_app.my_app.domain.NormalUser;
 import io.drivers_app.my_app.domain.Person;
 import io.drivers_app.my_app.domain.Trip;
@@ -189,6 +190,19 @@ public class DataOperations {
 		}
 		
 		return f;
+	}
+	
+	public void addEvent(Event event)
+	{
+		if(data.eventList.indexOf(event) == -1)
+		{
+			data.eventList.add(event);
+		}
+	}
+	
+	public ArrayList<Event> getEventList()
+	{
+		return data.eventList;
 	}
 	
 }

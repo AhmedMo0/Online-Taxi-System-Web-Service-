@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import io.drivers_app.my_app.domain.Data;
+import io.drivers_app.my_app.domain.Event;
 import io.drivers_app.my_app.domain.NormalUser;
 import io.drivers_app.my_app.domain.Trip;
 
@@ -69,6 +70,11 @@ public class UserOperations {
 		Data.getInstance().dataOperation.deleteTrip(user.currTrip);
 		user.currTrip = trip;
 		
+		Event event= new Event("User accepts captain price" , user.getUsername() );
+		Data.getInstance().dataOperation.addEvent(event);
+		Event event2= new Event("Captain arrived to user location" , trip.driver.getUsername() ,user.getUsername());
+		Data.getInstance().dataOperation.addEvent(event2);
+		
 		user.offersList.clear();
 	}
 	
@@ -109,6 +115,9 @@ public class UserOperations {
 			addToHistory(user.currTrip);
 			
 			//System.out.println(user.currTrip.toString());
+			
+			Event event= new Event("Captain arrived user to destination" , user.currTrip.driver.getUsername() , user.getUsername());
+			Data.getInstance().dataOperation.addEvent(event);
 			
 			user.currTrip.driver.currTrip = null;
 			user.currTrip = null;

@@ -1,4 +1,5 @@
-package pk1;
+package io.drivers_app.my_app.domain;
+
 
 import java.util.Date;
 

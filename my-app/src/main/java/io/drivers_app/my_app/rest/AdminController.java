@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import io.drivers_app.my_app.domain.Admin;
 import io.drivers_app.my_app.domain.Data;
 import io.drivers_app.my_app.domain.Driver;
+import io.drivers_app.my_app.domain.Event;
 import io.drivers_app.my_app.domain.NormalUser;
 import io.drivers_app.my_app.domain.Person;
 import io.drivers_app.my_app.domain.loginDTO;
@@ -143,6 +144,17 @@ public class AdminController {
     	return new ResponseEntity<>(Data.getInstance().destAreaWithDiscount = areasList, HttpStatus.CREATED);
     }
     
+    
+    @GetMapping("/{username}/showAllEvents")
+    public ResponseEntity<List<Event> > showAllEvents(@PathVariable final String username) {    	
+        //return ResponseEntity.ok(curr);
+    	if(curr == null)
+    	{
+    		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Access Denied or Already Logged Out");
+    	}
+    	
+    	return new ResponseEntity<>(Data.getInstance().eventList, HttpStatus.OK);
+    }
     
     
     
