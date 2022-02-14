@@ -1,4 +1,4 @@
-# Online Taxi System (Web Service)
+# Online Taxi System (Spring Boot Web Service)
  this application designed with respect to SOLID principles and OOP concepts you can find class diagram <a href="https://github.com/AhmedMo0/Sprint2/blob/main/class%20diagram.png">here</a>. it's considered as a simulation of real apps that helps users to communicate with car drivers to transport users to any area
  
  
